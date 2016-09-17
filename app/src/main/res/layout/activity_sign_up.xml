@@ -17,7 +17,8 @@
         android:id="@+id/button3"
         android:allowUndo="false"
         android:layout_alignParentBottom="true"
-        android:background="#9d4bdabd" />
+        android:background="#9d4bdabd"
+        android:onClick="clickSignupSign" />
 
     <LinearLayout
         android:orientation="vertical"

@@ -17,6 +17,8 @@ public class Sign_upActivity extends AppCompatActivity {
     private RadioGroup radioGroup;
     private RadioButton maleRadioButton, femaleRadioButton;
     private ImageView imageView;
+    private String nameString, userString, passwordString,
+            repasswordString, sexString, imageString;
 
 
     @Override
@@ -35,14 +37,17 @@ public class Sign_upActivity extends AppCompatActivity {
         imageView = (ImageView) findViewById(R.id.imageView);
 
 
-
-
-
-
     }//main method 2
 
     public void clickSignupSign(View view) {
 
+        //get Value From Edit Text แปลค่าจาก Edit Text > String
+        nameString = nameEditText.getText().toString().trim();
+        userString = userEditText.getText().toString().trim();
+        passwordString = passwordEditText.getText().toString().trim();
+        repasswordString = rePasswordEditText.getText().toString().trim();
+
+        //Chack Space ต้องกรอกข้อความให้ครบ
 
     } // clickSignup
 
