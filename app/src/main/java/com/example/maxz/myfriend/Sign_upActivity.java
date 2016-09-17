@@ -28,9 +28,9 @@ public class Sign_upActivity extends AppCompatActivity {
 
         //Bind Widget ประกาศค่า ตัวแปร private
         nameEditText = (EditText) findViewById(R.id.editText);
-        nameEditText = (EditText) findViewById(R.id.editText2);
-        nameEditText = (EditText) findViewById(R.id.editText3);
-        nameEditText = (EditText) findViewById(R.id.editText4);
+        userEditText = (EditText) findViewById(R.id.editText2);
+        passwordEditText = (EditText) findViewById(R.id.editText3);
+        rePasswordEditText = (EditText) findViewById(R.id.editText4);
         radioGroup = (RadioGroup) findViewById(R.id.ragsex);
         maleRadioButton = (RadioButton) findViewById(R.id.radioButton);
         femaleRadioButton = (RadioButton) findViewById(R.id.radioButton2);
@@ -51,6 +51,10 @@ public class Sign_upActivity extends AppCompatActivity {
         if (nameString.equals("") || userString.equals("") ||
                 passwordString.equals("") || repasswordString.equals("")) {
             //Have Space สภาวะที่มีช่องว่าง
+            myAlert myAlert = new myAlert(this,
+                    R.drawable.doremon48, "มีช่องว่าง", "กรุณากรอกทุกช่องค่ะ");
+            myAlert.myDialog();
+
         }
 
     } // clickSignup
