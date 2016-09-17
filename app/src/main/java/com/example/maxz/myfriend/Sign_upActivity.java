@@ -48,6 +48,10 @@ public class Sign_upActivity extends AppCompatActivity {
         repasswordString = rePasswordEditText.getText().toString().trim();
 
         //Chack Space ต้องกรอกข้อความให้ครบ
+        if (nameString.equals("") || userString.equals("") ||
+                passwordString.equals("") || repasswordString.equals("")) {
+            //Have Space สภาวะที่มีช่องว่าง
+        }
 
     } // clickSignup
 
