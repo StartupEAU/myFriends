@@ -2,17 +2,20 @@ package com.example.maxz.myfriend;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.VectorEnabledTintResources;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+
+
 
 public class Sign_upActivity extends AppCompatActivity {
 
@@ -24,6 +27,7 @@ public class Sign_upActivity extends AppCompatActivity {
     private ImageView imageView;
     private String nameString, userString, passwordString,
             repasswordString, sexString, imageString, imasgePathString, imageNameString;
+    private Boolean statusABoolean = true;
 
 
     @Override
@@ -68,9 +72,25 @@ public class Sign_upActivity extends AppCompatActivity {
             Uri uri = data.getData();
             imasgePathString = myFindPathImage(uri);
             Log.d("MyFriendsV1", "imagePathString==>" + imasgePathString);
-        } // if
 
-    }// onActivityResult
+            // Setup image to imageview
+            try {
+                Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(uri));
+                imageView.setImageBitmap(bitmap);
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            } // try
+
+            statusABoolean = false;
+
+
+
+            } // if
+
+        }// onActivityResult
+
 
     private String myFindPathImage(Uri uri) {
         String strResult = null;
@@ -112,8 +132,12 @@ public class Sign_upActivity extends AppCompatActivity {
             //non check sex
             myAlert sexmyAlert = new myAlert(this, R.drawable.rat48, "no choose sex", "please choose sex");
             sexmyAlert.myDialog();
-
+        } else if (statusABoolean) {
+            myAlert myAlert = new myAlert(this, R.drawable.bird48, "ยังไม่เลือกรูป", "กรุณาเลือกรูปด้วยครับ");
+            myAlert.myDialog();
         }
+
+
 
     } // clickSignup
 
