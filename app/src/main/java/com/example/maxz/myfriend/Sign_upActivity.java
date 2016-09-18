@@ -1,8 +1,10 @@
 package com.example.maxz.myfriend;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.VectorEnabledTintResources;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -36,8 +38,32 @@ public class Sign_upActivity extends AppCompatActivity {
         femaleRadioButton = (RadioButton) findViewById(R.id.radioButton2);
         imageView = (ImageView) findViewById(R.id.imageView);
 
+        //image controller
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/*");
+                startActivityForResult(Intent.createChooser(intent, "โปรดเลือกรูปภาพ"), 1);
+
+
+
+            } // onclick
+        });
+
 
     }//main method 2
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if ((requestCode == 1) && (resultCode == RESULT_OK)) {
+            //Result Complete
+            Log.d("MyFriendsV1", "Result ==> OK");
+        } // if
+
+    }// onActivityResult
 
     public void clickSignupSign(View view) {
 
@@ -56,11 +82,11 @@ public class Sign_upActivity extends AppCompatActivity {
             myAlert.myDialog();
         } else if (!passwordString.equals(repasswordString)) {
             // Password not match
-            myAlert myAlert= new myAlert(this, R.drawable.doremon48, "Password error", "กรุณาพิมพ์ password ให้เหมือนกัน");
+            myAlert myAlert = new myAlert(this, R.drawable.doremon48, "Password error", "กรุณาพิมพ์ password ให้เหมือนกัน");
             myAlert.myDialog();
         } else if (!(maleRadioButton.isChecked() || femaleRadioButton.isChecked())) {
             //non check sex
-            myAlert sexmyAlert = new myAlert(this, R.drawable.rat48, "no choose sex" , "please choose sex");
+            myAlert sexmyAlert = new myAlert(this, R.drawable.rat48, "no choose sex", "please choose sex");
             sexmyAlert.myDialog();
 
         }
