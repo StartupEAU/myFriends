@@ -167,6 +167,15 @@ public class Sign_upActivity extends AppCompatActivity {
         imageNameString = "http://swiftcodingthai.com/18Sep/Image" + imageNameString;
 
         Log.d("MyFriendV1", "imageNameString ==>" + imageNameString);
+
+        Log.d("MYFriendV2", "Name =" + nameString);
+        Log.d("MYFriendV2", "Sex" + sexString);
+        Log.d("MYFriendV2", "User" + userString);
+        Log.d("MYFriendV2", "Password" + passwordString);
+        Log.d("MYFriendV2", "Image" + imageNameString);
+
+
+
     } // insertData
 
     private void uploadImageToServer() {
