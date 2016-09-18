@@ -54,6 +54,14 @@ public class Sign_upActivity extends AppCompatActivity {
             myAlert myAlert = new myAlert(this,
                     R.drawable.doremon48, "มีช่องว่าง", "กรุณากรอกทุกช่องค่ะ");
             myAlert.myDialog();
+        } else if (!passwordString.equals(repasswordString)) {
+            // Password not match
+            myAlert myAlert= new myAlert(this, R.drawable.doremon48, "Password error", "กรุณาพิมพ์ password ให้เหมือนกัน");
+            myAlert.myDialog();
+        } else if (!(maleRadioButton.isChecked() || femaleRadioButton.isChecked())) {
+            //non check sex
+            myAlert sexmyAlert = new myAlert(this, R.drawable.rat48, "no choose sex" , "please choose sex");
+            sexmyAlert.myDialog();
 
         }
 
