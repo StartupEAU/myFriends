@@ -1,10 +1,12 @@
 package com.example.maxz.myfriend;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +17,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
+
+import com.squareup.okhttp.FormEncodingBuilder;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
 
 import org.jibble.simpleftp.SimpleFTP;
 
@@ -175,8 +184,64 @@ public class Sign_upActivity extends AppCompatActivity {
         Log.d("MYFriendV2", "Image" + imageNameString);
 
 
+        MyUpdateUser myUpdateUser = new MyUpdateUser(this);
+        myUpdateUser.execute();
+
 
     } // insertData
+
+    private class MyUpdateUser extends AsyncTask<Void, Void, String> {
+
+        private Context context;
+        private static final String urlPHP = "http://swiftcodingthai.com/18Sep/add_film.php";
+
+        public MyUpdateUser(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            Log.d("MyFriendV2", "Result ==>" + s);
+
+            if (Boolean.parseBoolean(s)) {
+                Toast.makeText(context, "อัพข้อมูลเรียบร้อยแล้ว", Toast.LENGTH_SHORT).show();
+                finish();
+            } else {
+                Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+
+        @Override
+        protected String doInBackground(Void... params) {
+
+            try {
+
+                OkHttpClient okHttpClient = new OkHttpClient();
+                RequestBody requestBody = new FormEncodingBuilder()// การโยนภายในครั้งเดียว
+                        .add("isAdd", "true")
+                        .add("Name", nameString)
+                        .add("Sex", sexString)
+                        .add("User", userString)
+                        .add("Password", passwordString)
+                        .add("Image", imageNameString)
+                        .build();
+
+                Request.Builder builder = new Request.Builder();
+                Request request = builder.url(urlPHP).post(requestBody).build();
+                Response response = okHttpClient.newCall(request).execute();
+                return response.body().string();
+
+
+            } catch (Exception e) {
+                return null;
+            }
+
+        } // do in back
+    } // Myupdateuserclass
+
 
     private void uploadImageToServer() {
 
@@ -199,6 +264,7 @@ public class Sign_upActivity extends AppCompatActivity {
             Log.d("MyFriendV1", "upload Finish");
 
         } catch (Exception e) {
+            e.printStackTrace();
             Log.d("MyFriendV1", "e ==>" + e.toString());
         }
     }
