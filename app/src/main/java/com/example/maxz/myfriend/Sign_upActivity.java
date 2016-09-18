@@ -61,6 +61,21 @@ public class Sign_upActivity extends AppCompatActivity {
             } // onclick
         });
 
+        //Radio Controller
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                switch (checkedId) {
+                    case R.id.radioButton:
+                        sexString = "Male";
+                        break;
+                    case R.id.radioButton2:
+                        sexString = "Female";
+                        break;
+                } // switch
+            } // checked
+        });
 
     }//main method 2
 
@@ -90,10 +105,9 @@ public class Sign_upActivity extends AppCompatActivity {
             statusABoolean = false;
 
 
+        } // if
 
-            } // if
-
-        }// onActivityResult
+    }// onActivityResult
 
 
     private String myFindPathImage(Uri uri) {
@@ -142,7 +156,20 @@ public class Sign_upActivity extends AppCompatActivity {
         } else {
             //upload image to server
             uploadImageToServer();
+            insertDataToServer();
         }
+
+    } // clickSignup
+
+    private void insertDataToServer() {
+
+        imageNameString = imasgePathString.substring(imasgePathString.lastIndexOf("/"));
+        imageNameString = "http://swiftcodingthai.com/18Sep/Image" + imageNameString;
+
+        Log.d("MyFriendV1", "imageNameString ==>" + imageNameString);
+    } // insertData
+
+    private void uploadImageToServer() {
 
         //New Policy
         StrictMode.ThreadPolicy threadPolicy = new StrictMode.ThreadPolicy
@@ -151,9 +178,9 @@ public class Sign_upActivity extends AppCompatActivity {
 
 
         try {
-    // connect
+            // connect
             SimpleFTP simpleFTP = new SimpleFTP();
-            simpleFTP.connect("ftp.swiftcodingthai.com",21,
+            simpleFTP.connect("ftp.swiftcodingthai.com", 21,
                     "18Sep@swiftcodingthai.com", "Abc12345");
             simpleFTP.bin();
             simpleFTP.cwd("Image"); // path server folder
@@ -165,13 +192,6 @@ public class Sign_upActivity extends AppCompatActivity {
         } catch (Exception e) {
             Log.d("MyFriendV1", "e ==>" + e.toString());
         }
-
-
-
-    } // clickSignup
-
-    private void uploadImageToServer() {
-
     }
 
 }//main class 2
