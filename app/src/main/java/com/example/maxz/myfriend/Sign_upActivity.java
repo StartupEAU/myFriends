@@ -163,8 +163,9 @@ public class Sign_upActivity extends AppCompatActivity {
             Log.d("MyFriendV1", "upload Finish");
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.d("MyFriendV1", "e ==>" + e.toString());
         }
+
 
 
     } // clickSignup
