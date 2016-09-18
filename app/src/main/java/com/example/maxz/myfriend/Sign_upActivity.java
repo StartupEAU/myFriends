@@ -1,6 +1,9 @@
 package com.example.maxz.myfriend;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.VectorEnabledTintResources;
@@ -20,7 +23,7 @@ public class Sign_upActivity extends AppCompatActivity {
     private RadioButton maleRadioButton, femaleRadioButton;
     private ImageView imageView;
     private String nameString, userString, passwordString,
-            repasswordString, sexString, imageString;
+            repasswordString, sexString, imageString, imasgePathString, imageNameString;
 
 
     @Override
@@ -47,7 +50,6 @@ public class Sign_upActivity extends AppCompatActivity {
                 startActivityForResult(Intent.createChooser(intent, "โปรดเลือกรูปภาพ"), 1);
 
 
-
             } // onclick
         });
 
@@ -61,9 +63,31 @@ public class Sign_upActivity extends AppCompatActivity {
         if ((requestCode == 1) && (resultCode == RESULT_OK)) {
             //Result Complete
             Log.d("MyFriendsV1", "Result ==> OK");
+
+            //Find Path of Image
+            Uri uri = data.getData();
+            imasgePathString = myFindPathImage(uri);
+            Log.d("MyFriendsV1", "imagePathString==>" + imasgePathString);
         } // if
 
     }// onActivityResult
+
+    private String myFindPathImage(Uri uri) {
+        String strResult = null;
+
+        String[] strings = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getContentResolver().query(uri, strings, null, null, null);
+
+        if (cursor != null) {
+            cursor.moveToFirst();
+            int intIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            strResult = cursor.getString(intIndex);
+
+        } else {
+            strResult = uri.getPath();
+        }
+        return strResult;
+    }
 
     public void clickSignupSign(View view) {
 
@@ -73,7 +97,7 @@ public class Sign_upActivity extends AppCompatActivity {
         passwordString = passwordEditText.getText().toString().trim();
         repasswordString = rePasswordEditText.getText().toString().trim();
 
-        //Chack Space ต้องกรอกข้อความให้ครบ
+        //Check Space ต้องกรอกข้อความให้ครบ
         if (nameString.equals("") || userString.equals("") ||
                 passwordString.equals("") || repasswordString.equals("")) {
             //Have Space สภาวะที่มีช่องว่าง
