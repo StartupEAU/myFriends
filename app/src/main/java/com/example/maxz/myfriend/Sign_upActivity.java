@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +16,9 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import org.jibble.simpleftp.SimpleFTP;
+
+import java.io.File;
 
 
 public class Sign_upActivity extends AppCompatActivity {
@@ -135,10 +139,38 @@ public class Sign_upActivity extends AppCompatActivity {
         } else if (statusABoolean) {
             myAlert myAlert = new myAlert(this, R.drawable.bird48, "ยังไม่เลือกรูป", "กรุณาเลือกรูปด้วยครับ");
             myAlert.myDialog();
+        } else {
+            //upload image to server
+            uploadImageToServer();
+        }
+
+        //New Policy
+        StrictMode.ThreadPolicy threadPolicy = new StrictMode.ThreadPolicy
+                .Builder().permitAll().build();
+        StrictMode.setThreadPolicy(threadPolicy);
+
+
+        try {
+    // connect
+            SimpleFTP simpleFTP = new SimpleFTP();
+            simpleFTP.connect("ftp.swiftcodingthai.com",21,
+                    "18Sep@swiftcodingthai.com", "Abc12345");
+            simpleFTP.bin();
+            simpleFTP.cwd("Image"); // path server folder
+            simpleFTP.stor(new File(imasgePathString)); // ตำแหน่ง path ที่โยนขึ้นไป
+            simpleFTP.disconnect();
+
+            Log.d("MyFriendV1", "upload Finish");
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
 
-
     } // clickSignup
+
+    private void uploadImageToServer() {
+
+    }
 
 }//main class 2
